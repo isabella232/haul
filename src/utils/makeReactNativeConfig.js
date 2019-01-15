@@ -112,6 +112,7 @@ const getDefaultConfig = ({
               loader: require.resolve('thread-loader'),
               options: {
                 workers: Math.max(os.cpus().length - 1, 1),
+                workerNodeArgs: ['--max-old-space-size=4000'],
               },
             },
             {
@@ -163,7 +164,7 @@ const getDefaultConfig = ({
     ].concat(
       dev
         ? [
-            new webpack.HotModuleReplacementPlugin(),
+            // new webpack.HotModuleReplacementPlugin(),
             new webpack.EvalSourceMapDevToolPlugin({
               module: true,
             }),
@@ -389,9 +390,9 @@ function injectPolyfillIntoEntry({
     require.resolve('./polyfillEnvironment.js'),
   ];
 
-  if (dev) {
-    reactNativeHaulEntries.push(require.resolve('../../hot/patch.js'));
-  }
+  // if (dev) {
+  //   reactNativeHaulEntries.push(require.resolve('../../hot/patch.js'));
+  // }
 
   return makeWebpackEntry(userEntry, reactNativeHaulEntries);
 }
